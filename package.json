@@ -2,7 +2,7 @@
   "name": "goit-react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://MelnychenkoJenny.github.io/goit-react-hw-03-image-finder",
+  "homepage": "https://MelnychenkoJenny.github.io/goit-react-hw-04-images",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
