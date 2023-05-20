@@ -1,0 +1,5 @@
+# Пошук зображень
+Застосунок пошуку зображень за ключовим словом. 
+Для HTTP-запитів використовується публічний сервіс пошуку зображень Pixabay.
+![Image search site page](./assets/imageSearch.png)
+![Image search site page mobile](./assets/imageSearchMob.png)
