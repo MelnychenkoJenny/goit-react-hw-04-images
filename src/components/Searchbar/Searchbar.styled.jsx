@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Form, Field } from 'formik';
 
 export const Header = styled.header`
   display: flex;
@@ -9,7 +8,11 @@ export const Header = styled.header`
   gap: 20px;
   align-items: center;
   background-color: ${({ theme: { colors } }) => colors.background};
-  background: linear-gradient(to top, ${({ theme: { colors } }) => colors.headerGradientOne}, ${({ theme: { colors } }) => colors.headerGradientTwo});
+  background: linear-gradient(
+    to top,
+    ${({ theme: { colors } }) => colors.headerGradientOne},
+    ${({ theme: { colors } }) => colors.headerGradientTwo}
+  );
   @media screen and (min-width: 530px) {
     justify-content: space-evenly;
   }
@@ -19,13 +22,13 @@ export const MainTitle = styled.h1`
   text-shadow: ${({ theme: { colors } }) => colors.textShadow} 4px 2px 3px;
 `;
 
-export const FormStyle = styled(Form)`
+export const FormStyle = styled.form`
   display: flex;
   border-radius: 5px;
   overflow: hidden;
 `;
-export const Input = styled(Field)`
-width: 330px;
+export const Input = styled.input`
+  width: 330px;
   height: 30px;
   padding-left: 10px;
   border: none;

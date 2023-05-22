@@ -12,7 +12,6 @@ export const GalleryList = styled.ul`
   gap: 10px;
 `;
 
-
 export const ButtonMore = styled.button`
   display: block;
   margin: 0 auto;
