@@ -1,11 +1,13 @@
 import { Searchbar } from 'components/Searchbar';
 import { toast, ToastContainer } from 'react-toastify';
 import { ImageGallery } from 'components/ImageGallery';
-import { ButtonMore, Container} from 'components/ImageGallery/ImageGallery.styled';
+import { Container} from 'components/App/App.styled';
 import { Loader } from 'components/Loader';
 import { fetchImages } from 'components/services/pixabayApi';
 import { EmptyNotification } from 'components/EmptyNotification';
 import { useState, useEffect } from 'react';
+import { ButtonMore, ButtonUp } from 'components/Button/Button.styled';
+import { AiOutlineArrowUp } from 'react-icons/ai';
 
 export const App = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -18,7 +20,6 @@ export const App = () => {
 
   useEffect(() => {
     if (images.length > 12) {
-
       const { height: cardHeight } = document
         .querySelector('ul')
         .firstElementChild.getBoundingClientRect();
@@ -71,6 +72,11 @@ export const App = () => {
   const loadMoreBtn = () => {
     setPage(prevPage => prevPage + 1);
   };
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+    });
+  }
 
   return (
     <Container>
@@ -80,10 +86,19 @@ export const App = () => {
       {loading && <Loader />}
       {empty && <EmptyNotification />}
       {total / 12 > page && !loading && (
-        <ButtonMore type="button" onClick={loadMoreBtn}>
-          Load more
-        </ButtonMore>
+          <ButtonMore type="button" onClick={loadMoreBtn}>
+            Load more
+          </ButtonMore>
+        
       )}
+      {images.length >= 12 && !loading && (
+          <ButtonUp type="button" onClick={scrollToTop}>
+          <AiOutlineArrowUp/>
+        </ButtonUp>
+        
+      )}
+       
+
       <ToastContainer autoClose={2000} />
     </Container>
   );
