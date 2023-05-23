@@ -1,13 +1,14 @@
 import { Searchbar } from 'components/Searchbar';
 import { toast, ToastContainer } from 'react-toastify';
 import { ImageGallery } from 'components/ImageGallery';
-import { Container} from 'components/App/App.styled';
+import { Container } from 'components/App/App.styled';
 import { Loader } from 'components/Loader';
 import { fetchImages } from 'components/services/pixabayApi';
 import { EmptyNotification } from 'components/EmptyNotification';
 import { useState, useEffect } from 'react';
 import { ButtonMore, ButtonUp } from 'components/Button/Button.styled';
 import { AiOutlineArrowUp } from 'react-icons/ai';
+import { Error } from 'components/Error';
 
 export const App = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -17,6 +18,7 @@ export const App = () => {
   const [loading, setLoading] = useState(false);
   const [empty, setEmpty] = useState(false);
   const [error, setError] = useState(null);
+  const [showButton, setShowButton] = useState(false);
 
   useEffect(() => {
     if (images.length > 12) {
@@ -31,9 +33,27 @@ export const App = () => {
   });
 
   useEffect(() => {
+    getImages();
+    async function getImages() {
+      try {
+        setLoading(true);
+        const responseImages = await fetchImages('', 1);
+        setImages([...responseImages.hits]);
+        setTotal(responseImages.total);
+        setEmpty(false);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
     if (searchQuery) getImages();
     async function getImages() {
       try {
+        setShowButton(true);
         setLoading(true);
         const responseImages = await fetchImages(searchQuery, page);
 
@@ -52,7 +72,7 @@ export const App = () => {
         setLoading(false);
       }
     }
-  }, [searchQuery, page]);
+  }, [page, searchQuery]);
 
   const handleImageNameChange = imageName => {
     if (searchQuery === imageName) {
@@ -76,28 +96,25 @@ export const App = () => {
     window.scrollTo({
       top: 0,
     });
-  }
+  };
 
   return (
     <Container>
       <Searchbar onSubmit={handleImageNameChange} />
       <ImageGallery images={images} />
-      {error && <h2>Something went wrong: ({error})!</h2>}
+      {error && <Error error={error} />}
       {loading && <Loader />}
       {empty && <EmptyNotification />}
-      {total / 12 > page && !loading && (
-          <ButtonMore type="button" onClick={loadMoreBtn}>
-            Load more
-          </ButtonMore>
-        
+      {total / 12 > page && !loading && showButton && (
+        <ButtonMore type="button" onClick={loadMoreBtn}>
+          Load more
+        </ButtonMore>
       )}
-      {images.length >= 12 && !loading && (
-          <ButtonUp type="button" onClick={scrollToTop}>
-          <AiOutlineArrowUp/>
+      {images.length >= 12 && !loading && showButton && (
+        <ButtonUp type="button" onClick={scrollToTop}>
+          <AiOutlineArrowUp />
         </ButtonUp>
-        
       )}
-       
 
       <ToastContainer autoClose={2000} />
     </Container>

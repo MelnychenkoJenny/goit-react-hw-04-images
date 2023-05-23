@@ -18,6 +18,7 @@ export const Searchbar = ({ onSubmit }) => {
   };
 
   const handleSubmit = e => {
+    
     e.preventDefault();
     if (searchQuery.trim() === '') {
       toast.error(
