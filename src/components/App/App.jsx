@@ -110,7 +110,7 @@ export const App = () => {
           Load more
         </ButtonMore>
       )}
-      {images.length >= 12 && !loading && showButton && (
+      {images.length >= 12 && !loading && (
         <ButtonUp type="button" onClick={scrollToTop}>
           <AiOutlineArrowUp />
         </ButtonUp>
